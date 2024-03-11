@@ -1,0 +1,71 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct student {
+    char name[50];
+    int regno;
+    char class[10];
+};
+
+void add_student(struct student *students, int *num_students);
+void display_students(struct student *students, int num_students);
+
+int main() {
+    struct student students[100];
+    int num_students = 0;
+
+    int choice;
+
+    while (1) {
+        printf("\n1. Add student\n2. Display students\n3. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                add_student(students, &num_students);
+                break;
+            case 2:
+                display_students(students, num_students);
+                break;
+            case 3:
+                exit(0);
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    }
+
+    return 0;
+}
+
+void add_student(struct student *students, int *num_students) {
+    if (*num_students >= 100) {
+        printf("Maximum number of students reached. Cannot add more students.\n");
+        return;
+    }
+
+    printf("Enter name: ");
+    scanf("%s", students[*num_students].name);
+
+    printf("Enter registration number: ");
+    scanf("%d", &students[*num_students].regno);
+
+    printf("Enter class: ");
+    scanf("%s", students[*num_students].class);
+
+    (*num_students)++;
+}
+
+void display_students(struct student *students, int num_students) {
+    if (num_students == 0) {
+        printf("No students to display.\n");
+        return;
+    }
+
+    printf("\nName\t\tRegistration Number\tClass\n");
+
+    for (int i = 0; i < num_students; i++) {
+        printf("%s\t\t%d\t\t%s\n", students[i].name, students[i].regno, students[i].class);
+    }
+}
